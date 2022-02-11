@@ -5,7 +5,7 @@ class StudentController {
     try {
       let dataStudents = await student.findAll({});
 
-      res.status(200).json(dataStudents);
+      return res.status(200).json(dataStudents);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -17,11 +17,13 @@ class StudentController {
 
       let result = await student.findByPk(id);
 
-      result
-        ? res.status(200).json(result)
-        : res.status(404).json({
-            message: `Student with ID ${id} not found!`,
-          });
+      if (result) {
+        return res.status(200).json(result);
+      } else {
+        return res.status(404).json({
+          message: `Student with ID ${id} not found!`,
+        });
+      }
     } catch (error) {
       res.status(500).json(error);
     }
@@ -34,12 +36,12 @@ class StudentController {
     }
   }
 
-  static async addStudent(req, res) {
+  static async createStudent(req, res) {
     try {
       const { studentId, name, email, password, confirm_password, majorId } =
         req.body;
 
-      let result = await student.create({
+      const result = await student.create({
         studentId,
         name,
         email,
@@ -47,24 +49,23 @@ class StudentController {
         confirm_password,
         majorId,
       });
-
       res.status(201).json(result);
     } catch (error) {
       res.status(500).json(error);
     }
   }
 
-  static async updateStudent(req, res) {
+  static async editStudent(req, res) {
     try {
       const id = +req.params.id;
-      const { studentId, name, email, password, confirm_password, majorId } =
+      const { studentId, name, username, password, confirm_password, majorId } =
         req.body;
 
       let result = await student.update(
         {
           studentId,
           name,
-          email,
+          username,
           password,
           confirm_password,
           majorId,
