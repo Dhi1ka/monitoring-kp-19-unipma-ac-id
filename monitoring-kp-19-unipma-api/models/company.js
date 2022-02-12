@@ -34,12 +34,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
+        unique: {
+          message: "Email already use!",
+        },
         validate: {
           notEmpty: {
             message: "Email can not empty!",
           },
           isEmail: {
             message: "Email not valid!",
+          },
+          async isUnique(value) {
+            const existEmail = await company.findAll();
+            if (value === existEmail[0].email) {
+              throw new Error("Email already use!");
+            }
           },
         },
       },
@@ -49,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             message: "Password can not empty!",
           },
+          len: [8, 255],
         },
       },
       confirm_password: {

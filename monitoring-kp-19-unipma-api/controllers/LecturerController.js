@@ -34,7 +34,7 @@ class LecturerController {
     }
   }
 
-  static async addLecturer(req, res) {
+  static async createLecturer(req, res) {
     try {
       const { lecturerId, name, email, password, confirm_password } = req.body;
 
@@ -52,7 +52,7 @@ class LecturerController {
     }
   }
 
-  static async updateLecturer(req, res) {
+  static async editLecturer(req, res) {
     try {
       const id = +req.params.id;
       const { lecturerId, name, email, password, confirm_password } = req.body;

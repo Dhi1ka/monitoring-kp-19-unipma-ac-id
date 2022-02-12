@@ -34,7 +34,7 @@ class CompanyController {
     }
   }
 
-  static async addCompany(req, res) {
+  static async createCompany(req, res) {
     try {
       const { companyId, name, email, password, confirm_password } = req.body;
 
@@ -52,7 +52,7 @@ class CompanyController {
     }
   }
 
-  static async updateCompany(req, res) {
+  static async editCompany(req, res) {
     try {
       const id = +req.params.id;
       const { companyId, name, email, password, confirm_password } = req.body;
