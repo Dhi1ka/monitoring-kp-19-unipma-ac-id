@@ -105,6 +105,22 @@ class CompanyController {
       res.status(500).json(error);
     }
   }
+
+  static async register(req, res) {
+    try {
+      //
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+
+  static async login(req, res) {
+    try {
+      //
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
 }
 
 module.exports = CompanyController;
