@@ -58,14 +58,14 @@ class StudentController {
   static async editStudent(req, res) {
     try {
       const id = +req.params.id;
-      const { studentId, name, username, password, confirm_password, majorId } =
+      const { studentId, name, email, password, confirm_password, majorId } =
         req.body;
 
       let result = await student.update(
         {
           studentId,
           name,
-          username,
+          email,
           password,
           confirm_password,
           majorId,

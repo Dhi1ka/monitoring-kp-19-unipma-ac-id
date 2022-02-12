@@ -10,8 +10,8 @@ router.get("/api", (req, res) => {
   });
 });
 
-router.use("/students", studentRouter);
-router.use("/lecturers", lecturerRouter);
-router.use("/companies", companyRouter);
+router.use("/api/students", studentRouter);
+router.use("/api/lecturers", lecturerRouter);
+router.use("/api/companies", companyRouter);
 
 module.exports = router;

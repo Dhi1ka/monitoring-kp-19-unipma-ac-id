@@ -47,9 +47,11 @@ module.exports = (sequelize, DataTypes) => {
             message: "Email not valid!",
           },
           async isUnique(value) {
-            const existEmail = await student.findAll();
-            if (value === existEmail[0].email) {
-              throw new Error("Email already use!");
+            const dataStudent = await student.findAll();
+            for (const email in dataStudent) {
+              if (value === dataStudent[email].dataValues.email) {
+                throw new Error("Email already use!");
+              }
             }
           },
         },
