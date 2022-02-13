@@ -1,4 +1,6 @@
 const { student } = require("../models");
+const { decryptPass } = require("../helpers/bcrypt");
+const { tokenGenerator } = require("../helpers/jwt");
 
 class StudentController {
   static async getAllStudents(req, res) {
@@ -113,7 +115,15 @@ class StudentController {
 
   static async register(req, res) {
     try {
-      //
+      const { name, email, password, confirm_password } = req.body;
+
+      let resultRegister = await student.create({
+        name,
+        email,
+        password,
+        confirm_password,
+      });
+      res.status(201).json(resultRegister);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -121,7 +131,31 @@ class StudentController {
 
   static async login(req, res) {
     try {
-      //
+      const { email, password } = req.body;
+
+      let resultLogin = await student.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (resultLogin) {
+        if ((decryptPass, resultLogin.password)) {
+          let token = tokenGenerator(resultLogin);
+
+          res.status(200).json({
+            access_token: token,
+          });
+        } else {
+          res.status(400).json({
+            message: "Your password is not correct!",
+          });
+        }
+      } else {
+        res.status(404).json({
+          message: "Student not found!",
+        });
+      }
     } catch (error) {
       res.status(500).json(error);
     }
