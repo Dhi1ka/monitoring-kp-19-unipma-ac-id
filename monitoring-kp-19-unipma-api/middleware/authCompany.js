@@ -1,6 +1,6 @@
 const { tokenVerifier } = require("../helpers/jwt");
 
-const authStudent = (req, res, next) => {
+const authCompany = (req, res, next) => {
   console.log(`Auth Middleware is Work!`);
 
   const { access_token } = req.headers.access_token;
@@ -8,11 +8,11 @@ const authStudent = (req, res, next) => {
   if (access_token) {
     try {
       let verify = tokenVerifier(access_token);
-      req.studentData = verify;
+      req.companyData = verify;
     } catch (error) {
       res.status(401).json({
         error,
-        message: "Student not authenticated!",
+        message: "Company not authenticated!",
       });
     }
   } else {
@@ -24,7 +24,7 @@ const authStudent = (req, res, next) => {
   next();
 };
 
-const authorStudent = (req, res, next) => {
+const authorCompany = (req, res, next) => {
   console.log("Authorization Middleware is Work!");
 
   const { access_token } = req.headers.access_token;
@@ -38,8 +38,8 @@ const authorStudent = (req, res, next) => {
 
     report
       .findByPk(id)
-      .then((studentId) => {
-        if (studentId !== req.studentData.id) {
+      .then((companyId) => {
+        if (companyId !== req.companyData.id) {
           res.status(401).json({
             message: "Unauthorized!",
           });
@@ -53,4 +53,4 @@ const authorStudent = (req, res, next) => {
   }
 };
 
-module.exports = { authStudent, authorStudent };
+module.exports = { authCompany, authorCompany };
