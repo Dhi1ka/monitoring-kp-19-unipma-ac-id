@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { encryptPass } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class admin extends Model {
     /**
@@ -34,9 +35,9 @@ module.exports = (sequelize, DataTypes) => {
             message: "Email not valid!",
           },
           async isUnique(value) {
-            const dataStudent = await student.findAll();
-            for (const email in dataStudent) {
-              if (value === dataStudent[email].dataValues.email) {
+            const dataAdmin = await admin.findAll();
+            for (const email in dataAdmin) {
+              if (value === dataAdmin[email].dataValues.email) {
                 throw new Error("Email already use!");
               }
             }
@@ -68,6 +69,12 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      hooks: {
+        beforeCreate: function (user, options) {
+          user.password = encryptPass(user.password);
+          user.confirm_password = encryptPass(user.confirm_password);
+        },
+      },
       sequelize,
       modelName: "admin",
     },
