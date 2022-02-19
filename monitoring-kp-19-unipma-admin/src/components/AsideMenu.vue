@@ -63,7 +63,7 @@ const menuClick = (event, item) => {
         />
       </nav-bar-item>
       <div class="flex-1 px-3">
-        <span>Admin</span> <b class="font-black">One</b>
+        <span>Dashboard</span> <b class="font-black">Admin</b>
       </div>
     </div>
     <div>
