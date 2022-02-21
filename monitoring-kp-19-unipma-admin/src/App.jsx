@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Header, Sidebar } from "./components";
+
+import { Header, Sidebar, Footer } from "./components";
 import { Dashboard, Students, Lecturers, Companies } from "./views";
 import "./assets/dashboard.css";
 import "./assets/bootstrap.min.css";
@@ -21,6 +22,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
